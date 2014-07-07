@@ -14,8 +14,8 @@ class HttpWebRequest
     const URLENCODED = 'application/x-www-form-urlencoded';
     const FORMDATA = 'multipart/form-data';
 
-    protected $methode = self::GET;
-    protected $protokoll = self::HTTP_11;
+    protected $method = self::GET;
+    protected $protocol = self::HTTP_11;
     protected $url;
     protected $scheme;
     protected $host;
@@ -71,41 +71,40 @@ class HttpWebRequest
 
     public function write()
     {
-        $head_body_array = array();
-        $senden = '';
+        $output = '';
         $page = str_replace(' ', '+', $this->page . ($this->query['get'] !== null ? '?' . $this->query['get'] : ''));
-        $senden .= $this->methode . ' ' . $page . ' ' . $this->protokoll . "\r\n";
-        $senden .= 'Connection: Close' . "\r\n";
-        $senden .= 'Host: ' . $this->host . "\r\n";
-        if ($this->methode == self::POST) {
-            $senden .= 'Content-Type: ' . self::URLENCODED . "\r\n";
-            $senden .= 'Content-Length: ' . strlen($this->query['post']) . "\r\n";
+        $output .= $this->method . ' ' . $page . ' ' . $this->protocol . "\r\n";
+        $output .= 'Connection: Close' . "\r\n";
+        $output .= 'Host: ' . $this->host . "\r\n";
+        if ($this->method == self::POST) {
+            $output .= 'Content-Type: ' . self::URLENCODED . "\r\n";
+            $output .= 'Content-Length: ' . strlen($this->query['post']) . "\r\n";
         }
         if ($this->auth !== null) {
-            $senden .= 'Authorization: Basic ' . $this->auth . "\r\n";
+            $output .= 'Authorization: Basic ' . $this->auth . "\r\n";
         }
-        $senden .= $this->addheader;
+        $output .= $this->addheader;
         if ($this->cookie !== null) {
-            $senden .= 'Cookie: ' . $this->cookie . "\r\n";
+            $output .= 'Cookie: ' . $this->cookie . "\r\n";
         }
-        $senden .= "\r\n";
+        $output .= "\r\n";
         if ($this->query['post'] !== null) {
-            $senden .= $this->query['post'];
+            $output .= $this->query['post'];
         }
         if ($this->fp) {
-            fwrite($this->fp, $senden);
+            fwrite($this->fp, $output);
         }
     }
 
     public function read()
     {
-        $empfangen = '';
+        $input = '';
         if ($this->fp) {
             while (!feof($this->fp)) {
-                $empfangen .= fgets($this->fp, 1024);
+                $input .= fgets($this->fp, 1024);
             }
         }
-        $head_body_array = preg_split("/(\n\n|\r\r|\r\n\r\n)/", $empfangen, 2);
+        $head_body_array = preg_split("/(\n\n|\r\r|\r\n\r\n)/", $input, 2);
         if (isset($head_body_array[0])) {
             $this->head = $head_body_array[0];
         }
@@ -174,9 +173,9 @@ class HttpWebRequest
         }
     }
 
-    public function setMethode($methode)
+    public function setMethod($method)
     {
-        $this->methode = strtoupper($methode);
+        $this->method = strtoupper($method);
     }
 
     public function setAuth($user, $password)
@@ -203,7 +202,7 @@ class HttpWebRequest
         if ($this->query['post'] === null) {
             $this->query['post'] = '';
         }
-        $this->setMethode(self::POST);
+        $this->setMethod(self::POST);
         if ($value === false) {
             $array = explode('=', $key);
             $key = $array[0];
