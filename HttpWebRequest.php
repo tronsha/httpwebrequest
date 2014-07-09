@@ -58,6 +58,13 @@ class HttpWebRequest
         }
     }
 
+    public function run()
+    {
+        $this->connect();
+        $this->write();
+        $this->read();
+    }
+
     public function connect()
     {
         if ($this->port === null) {
