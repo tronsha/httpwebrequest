@@ -34,6 +34,7 @@ class HttpWebRequest
     protected $content;
     protected $addheader = '';
     protected $fp;
+    protected $proxy = null;
 
     public function __construct($url)
     {
@@ -70,17 +71,28 @@ class HttpWebRequest
         if ($this->port === null) {
             $this->port = $this->scheme == 'https' ? 443 : 80;
         }
-        $ip = @gethostbyname($this->host);
+        $ip = @gethostbyname($this->proxy === null ? $this->host : $this->proxy['proxy']);
         $target = ($this->scheme == 'https' ? 'sslv2://' : '') . $ip;
-        $this->fp = @fsockopen($target, $this->port, $this->errno, $this->errstr, $this->sockettimeout);
+        $this->fp = @fsockopen(
+            $target,
+            $this->proxy === null ? $this->port : $this->proxy['port'],
+            $this->errno,
+            $this->errstr,
+            $this->sockettimeout
+        );
         return $this->errno;
     }
 
     public function write()
     {
         $output = '';
-        $page = str_replace(' ', '+', $this->page . ($this->query['get'] !== null ? '?' . $this->query['get'] : ''));
-        $output .= $this->method . ' ' . $page . ' ' . $this->protocol . "\r\n";
+        $page = str_replace(
+            ' ',
+            '+',
+            $this->page . ($this->query['get'] !== null ? '?' . $this->query['get'] : '')
+        );
+        $url = $this->proxy === null ? $page : $this->scheme . '://' . $this->host . '/' . $page;
+        $output .= $this->method . ' ' . $url . ' ' . $this->protocol . "\r\n";
         $output .= 'Connection: Close' . "\r\n";
         $output .= 'Host: ' . $this->host . "\r\n";
         if ($this->method == self::POST) {
@@ -277,5 +289,14 @@ class HttpWebRequest
     public function getStatus()
     {
         return $this->status;
+    }
+
+    public function useProxy($proxy, $port, $user = '', $password = '')
+    {
+        $this->proxy['proxy'] = $proxy;
+        $this->proxy['port'] = $port;
+        if ($user != '' && $password != '') {
+            $this->addHeader('Proxy-Authorization', 'Basic ' . base64_encode($user . ':' . $password));
+        }
     }
 }
