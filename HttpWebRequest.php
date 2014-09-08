@@ -250,7 +250,13 @@ class HttpWebRequest
         if ($key === null) {
             $out = '';
             foreach ($this->header as $k => $v) {
-                $out .= str_replace('_', '-', ucfirst(strtolower($k))) . ': ' . $v . "\n";
+                if (is_array($v) === false) {
+                    $out .= str_replace('_', '-', ucfirst(strtolower($k))) . ': ' . $v . "\n";
+                } else {
+                    foreach ($v as $v2) {
+                        $out .= str_replace('_', '-', ucfirst(strtolower($k))) . ': ' . $v2 . "\n";
+                    }
+                }
             }
             return $out;
         } else {
