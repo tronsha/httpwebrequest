@@ -1,0 +1,22 @@
+{
+    "name": "tronsha/httpwebrequest",
+    "description": "HTTP Web-Request",
+    "version": "1.0.0-dev",
+    "type": "library",
+    "keywords": [
+        "http"
+    ],
+    "homepage": "https://github.com/tronsha/httpwebrequest",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stefan Hüsges",
+            "homepage": "http://www.mpcx.net",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2"
+    },
+    "minimum-stability": "dev"
+}
