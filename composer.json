@@ -8,12 +8,8 @@
         "https", 
         "cookie",
         "proxy",
-        "get",
-        "post",
-        "gzip",
-        "deflate",
-        "identity",
-        "chunked"
+        "authorization"
+
     ],
     "homepage": "https://github.com/tronsha/httpwebrequest",
     "license": "MIT",
