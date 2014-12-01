@@ -4,7 +4,16 @@
     "version": "1.0.0-dev",
     "type": "library",
     "keywords": [
-        "http"
+        "http",
+        "https", 
+        "cookie",
+        "proxy",
+        "get",
+        "post",
+        "gzip",
+        "deflate",
+        "identity",
+        "chunked"
     ],
     "homepage": "https://github.com/tronsha/httpwebrequest",
     "license": "MIT",
