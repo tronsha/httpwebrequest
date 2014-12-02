@@ -91,7 +91,7 @@ class HttpWebRequest
             '+',
             $this->page . ($this->query['get'] !== null ? '?' . $this->query['get'] : '')
         );
-        $url = $this->proxy === null ? $page : $this->scheme . '://' . $this->host . '/' . $page;
+        $url = $this->proxy === null ? $page : $this->scheme . '://' . $this->host . $page;
         $output .= $this->method . ' ' . $url . ' ' . $this->protocol . "\r\n";
         $output .= 'Connection: Close' . "\r\n";
         $output .= 'Host: ' . $this->host . "\r\n";
