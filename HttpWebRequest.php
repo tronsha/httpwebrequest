@@ -1,4 +1,7 @@
 <?php
+
+namespace HttpWebRequest;
+
 class HttpWebRequest
 {
     const GET = 'GET';
