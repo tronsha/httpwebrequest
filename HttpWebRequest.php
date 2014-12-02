@@ -213,7 +213,7 @@ class HttpWebRequest
             $key = $array[0];
             $value = (strlen($array[1]) > 0) ? $array[1] : '';
         }
-        $this->query['get'] .= ($this->query['get'] !== '' ? '&' : '?') . $key . "=" . $value;
+        $this->query['get'] .= ($this->query['get'] !== '' ? '&' : '') . $key . "=" . $value;
     }
 
     public function addPost($key, $value = false)
