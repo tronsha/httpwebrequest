@@ -5,11 +5,7 @@
     "type": "library",
     "keywords": [
         "http",
-        "https", 
-        "cookie",
-        "proxy",
-        "authorization"
-
+        "https"
     ],
     "homepage": "https://github.com/tronsha/httpwebrequest",
     "license": "MIT",
