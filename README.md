@@ -1,6 +1,8 @@
 HttpWebRequest
 ==============
 
+You can install httpwebrequest through Composer:
+
 ```json
 {
     "require": {
