@@ -1,7 +1,7 @@
 HttpWebRequest
 ==============
 
-You can install httpwebrequest through Composer:
+You can install httpwebrequest through [Composer][3]:
 
 ```json
 {
@@ -15,14 +15,15 @@ You can install httpwebrequest through Composer:
 
 **Stefan Hüsges**
 
-* [GitHub][1]
-* [Homepage][2]
+:computer: [Homepage][1]
+
+:octocat: [GitHub][2]
 
 ## License
 
 [MIT License](LICENSE)
 
-[1]: https://github.com/tronsha
-[2]: http://www.mpcx.net
-[3]: https://packagist.org/
-[4]: https://getcomposer.org/
+[1]: http://www.mpcx.net
+[2]: https://github.com/tronsha
+[3]: https://getcomposer.org/
+[4]: https://packagist.org/
