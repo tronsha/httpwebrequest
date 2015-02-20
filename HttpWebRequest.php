@@ -75,7 +75,7 @@ class HttpWebRequest
             $this->port = $this->scheme == 'https' ? 443 : 80;
         }
         $ip = @gethostbyname($this->proxy === null ? $this->host : $this->proxy['proxy']);
-        $target = ($this->scheme == 'https' ? 'sslv2://' : '') . $ip;
+        $target = ($this->scheme == 'https' && $this->proxy === null ? 'sslv2://' : '') . $ip;
         $this->fp = @fsockopen(
             $target,
             $this->proxy === null ? $this->port : $this->proxy['port'],
@@ -94,7 +94,7 @@ class HttpWebRequest
             '+',
             $this->page . ($this->query['get'] !== null ? '?' . $this->query['get'] : '')
         );
-        $url = $this->proxy === null ? $page : $this->scheme . '://' . $this->host . $page;
+        $url = $this->proxy === null ? $page : $this->scheme . '://' . $this->host . ':' . $this->port . $page;
         $output .= $this->method . ' ' . $url . ' ' . $this->protocol . "\r\n";
         $output .= 'Connection: Close' . "\r\n";
         $output .= 'Host: ' . $this->host . "\r\n";
