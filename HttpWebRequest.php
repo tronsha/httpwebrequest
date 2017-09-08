@@ -46,7 +46,7 @@ class HttpWebRequest
         $this->query['post'] = null;
         $url_array = @parse_url($url);
         $this->scheme = $url_array['scheme'];
-        $this->host = $url_array['host'];
+        $this->host = idn_to_ascii($url_array['host']);
         $this->port = isset($url_array['port']) ? $url_array['port'] : null;
         $this->page = isset($url_array['path']) ? $url_array['path'] : '/';
         $this->query['get'] = isset($url_array['query']) ? $url_array['query'] : null;
