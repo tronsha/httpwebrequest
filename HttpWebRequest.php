@@ -35,7 +35,7 @@ class HttpWebRequest
     protected $status;
     protected $header = array();
     protected $content;
-    protected $addheader = '';
+    protected $addheader = array();
     protected $fp;
     protected $proxy = null;
 
@@ -53,6 +53,8 @@ class HttpWebRequest
         if (isset($url_array['user'])) {
             $this->setAuth($url_array['user'], $url_array['pass']);
         }
+        $this->addHeader('Host', $this->host);
+        $this->addHeader('Connection', 'Close');
     }
 
     public function __destruct()
@@ -96,8 +98,6 @@ class HttpWebRequest
         );
         $url = $this->proxy === null ? $page : $this->scheme . '://' . $this->host . ':' . $this->port . $page;
         $output .= $this->method . ' ' . $url . ' ' . $this->protocol . "\r\n";
-        $output .= 'Connection: Close' . "\r\n";
-        $output .= 'Host: ' . $this->host . "\r\n";
         if ($this->method == self::POST) {
             $output .= 'Content-Type: ' . self::URLENCODED . "\r\n";
             $output .= 'Content-Length: ' . strlen($this->query['post']) . "\r\n";
@@ -105,7 +105,7 @@ class HttpWebRequest
         if ($this->auth !== null) {
             $output .= 'Authorization: Basic ' . $this->auth . "\r\n";
         }
-        $output .= $this->addheader;
+        $output .= $this->buildHeader();
         if ($this->cookie !== null) {
             $output .= 'Cookie: ' . $this->cookie . "\r\n";
         }
@@ -243,9 +243,20 @@ class HttpWebRequest
         $this->sockettimeout = $sec;
     }
 
-    public function addHeader($key, $value)
+    public function addHeader($key, $value, $override = true)
     {
-        $this->addheader .= $key . ': ' . $value . "\r\n";
+        if ($override === true) {
+            $this->addheader[$key] = $value;
+        }
+    }
+
+    protected function buildHeader()
+    {
+        $header = '';
+        foreach ($this->addheader as $key => $value) {
+            $header .= $key . ': ' . $value . "\r\n";
+        }
+        return $header;
     }
 
     public function getHeader($key = null)
