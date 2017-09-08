@@ -6,7 +6,7 @@ You can install httpwebrequest through [Composer][3]:
 ```json
 {
     "require": {
-        "tronsha/httpwebrequest": "1.*"
+        "tronsha/httpwebrequest": "dev-master"
     }
 }
 ```

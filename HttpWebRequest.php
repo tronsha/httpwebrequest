@@ -33,9 +33,9 @@ class HttpWebRequest
     protected $head;
     protected $body;
     protected $status;
-    protected $header = array();
+    protected $header = [];
     protected $content;
-    protected $addheader = array();
+    protected $addheader = [];
     protected $fp;
     protected $proxy = null;
 
@@ -144,7 +144,7 @@ class HttpWebRequest
                     $this->header[$header_key][] = trim($header_value);
                 } else {
                     $temp_header_value = $this->header[$header_key];
-                    $this->header[$header_key] = array();
+                    $this->header[$header_key] = [];
                     $this->header[$header_key][] = $temp_header_value;
                     $this->header[$header_key][] = trim($header_value);
                 }
@@ -293,7 +293,7 @@ class HttpWebRequest
         if ($x === null) {
             return null;
         } elseif (is_array($x)) {
-            $parts = array();
+            $parts = [];
             foreach ($x as $value) {
                 list($part, $rest) = explode(';', $value, 2);
                 $parts[] = trim($part);

@@ -1,7 +1,7 @@
 {
   "name": "tronsha/httpwebrequest",
   "description": "HTTP Web-Request",
-  "version": "1.0.0",
+  "version": "1.0.1-dev",
   "type": "library",
   "keywords": [
     "http",
@@ -18,7 +18,7 @@
     }
   ],
   "require": {
-    "php": ">=5.3.2"
+    "php": ">=5.4"
   },
   "autoload": {
     "psr-4": {
